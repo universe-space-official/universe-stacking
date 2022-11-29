@@ -34,10 +34,7 @@ export default function Banner(props) {
       <Box align="center">
         {
           !state.coinbase ?
-            <Button primary color="#ffcc00" size="large" label="Connect" onClick={state.loadWeb3Modal} style={{
-              font: "normal normal 600 14px/7px Poppins",
-              borderRadius: "8px"
-            }} /> :
+            <Button primary size="medium" label="Connect" onClick={state.loadWeb3Modal} /> :
             <>
               <Text size="small">Connected</Text>
               <Text size="xsmall">{state.coinbase}</Text>
@@ -45,22 +42,12 @@ export default function Banner(props) {
         }
         {
           state.srg &&
-            state.netId === 80001 ?
-            <Text size="xsmall">SRG Address: <Anchor href={`https://mumbai.polygonscan.com/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text> :
-            state.netId === 97 ?
-              <Text size="xsmall">SRG Address: <Anchor href={`https://testnet.bscscan.com/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text> :
-              state.netId === 5 &&
-              <Text size="xsmall">SRG Address: <Anchor href={`https://goerli.etherscan.io/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text>
-
-        }
-        {
-          state.goldList &&
-            state.netId === 80001 ?
-            <Text size="xsmall">Gold List Address: <Anchor href={`https://mumbai.polygonscan.com/address/${state.goldList.address}`} target="_blank">{state.goldList.address}</Anchor></Text> :
-            state.netId === 97 ?
-              <Text size="xsmall">Gold List Address: <Anchor href={`https://testnet.bscscan.com/address/${state.goldList.address}`} target="_blank">{state.goldList.address}</Anchor></Text> :
-              state.netId === 5 &&
-              <Text size="xsmall">Gold List Address: <Anchor href={`https://goerli.etherscan.io/address/${state.goldList.address}`} target="_blank">{state.goldList.address}</Anchor></Text>
+          state.netId === 80001 ?
+          <Text size="xsmall">Univ Address: <Anchor href={`https://mumbai.polygonscan.com/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text> :
+          state.netId === 97 ?
+          <Text size="xsmall">Univ Address: <Anchor href={`https://testnet.bscscan.com/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text> :
+          state.netId === 5 &&
+          <Text size="xsmall">Univ Address: <Anchor href={`https://goerli.etherscan.io/address/${state.srg.address}`} target="_blank">{state.srg.address}</Anchor></Text>
 
         }
       </Box>

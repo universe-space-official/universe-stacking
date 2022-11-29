@@ -29,7 +29,6 @@ export default function App() {
   const { state, actions } = useAppState();
 
   const [srg, setSrg] = useState();
-  const [goldList, setGoldList] = useState();
   const [busd, setBusd] = useState();
   const [stablecoins, setStablecoins] = useState();
   const [value, setValue] = useState("Native");
@@ -62,9 +61,6 @@ export default function App() {
     actions.setSrg(srg)
   }, [srg])
   useEffect(() => {
-    actions.setGoldList(goldList)
-  }, [goldList])
-  useEffect(() => {
     actions.setLoadWeb3Modal(loadWeb3Modal)
   }, [loadWeb3Modal])
 
@@ -85,29 +81,20 @@ export default function App() {
   useEffect(() => {
     // Goerli
 
-    let newSrg, newGoldList, newColdStaking, newBusd
+    let newSrg, newColdStaking
     if (netId === 5) {
       newSrg = new ethers.Contract(addresses.srg.goerli, abis.srg, provider);
-      // newGoldList = new ethers.Contract(addresses.goldList.goerli, abis.goldList, provider);
-      // newColdStaking = new ethers.Contract(addresses.coldStaking.goerli, abis.coldStaking, provider);
     }
     // Mumbai
     if (netId === 80001) {
       newSrg = new ethers.Contract(addresses.srg.mumbai, abis.srg, provider);
-      // newGoldList = new ethers.Contract(addresses.goldList.mumbai, abis.goldList, provider);
-      // newColdStaking = new ethers.Contract(addresses.coldStaking.mumbai, abis.coldStaking, provider);
-
     }
     if (netId === 97) {
       newSrg = new ethers.Contract(addresses.srg.bsctestnet, abis.srg, provider);
-      // newGoldList = new ethers.Contract(addresses.goldList.bsctestnet, abis.goldList, provider);
-      // //newBusd = new ethers.Contract(addresses.busd.bsctestnet, abis.srg, provider);
-      // newColdStaking = new ethers.Contract(addresses.coldStaking.mumbai, abis.coldStaking, provider);
     }
-    setColdStaking(newColdStaking);
+    //setColdStaking(newColdStaking);
     setSrg(newSrg);
-    setGoldList(newGoldList);
-    setBusd(newBusd);
+
   }, [netId]);
   useMemo(async () => {
     if (client) {
@@ -144,8 +131,7 @@ export default function App() {
         const txApproval = await busdWithSigner.approve(srg.address, amount);
         await txApproval.wait();
       }
-      const goldListWithSigner = goldList.connect(signer);
-      tx = await goldListWithSigner.claimTokensWithStable(busd.address, amount);
+      tx = await univTokenWithSigner.claimTokensWithStable(busd.address, amount);
     }
 
     await tx.wait();
@@ -173,13 +159,7 @@ export default function App() {
     <AppContext.Provider value={{ state, actions }}>
       <MainMenu />
       <Box pad={{ top: "xlarge", bottom: "large" }} flex={false} height="large">
-        <Banner
-          netId={netId}
-          srg={srg}
-          goldList={goldList}
-          coinbase={coinbase}
-          loadWeb3Modal={loadWeb3Modal}
-        />
+        <Banner />
         {
           coinbase &&
           <Box align="center" pad="medium">
@@ -211,9 +191,6 @@ export default function App() {
           ) &&
           <GoldListModal
             value={value}
-            provider={provider}
-            coinbase={coinbase}
-            netId={netId}
             buyTokens={buyTokens}
             getExpectedSrg={getExpectedSrg}
           />

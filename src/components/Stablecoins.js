@@ -5,10 +5,12 @@ import {
   Select
 } from 'grommet';
 import { ethers } from "ethers";
+import { useAppContext } from '../hooks/useAppState';
 
 import abis from "../contracts/abis";
 
 export default function Stablecoins(props) {
+  const { state } = useAppContext();
 
   const [value,setValue] = useState(props.stablecoins[0].name);
   const [balance,setBalance] = useState();
@@ -18,9 +20,9 @@ export default function Stablecoins(props) {
 
       <Box align="center" pad="medium">
       {
-        props.stablecoins &&
+        state.stablecoins &&
         <Select
-          options={props.stablecoins.map(item => item.name)}
+          options={state.stablecoins.map(item => item.name)}
           value={value}
           onChange={({ option }) => {
             setValue(option)
