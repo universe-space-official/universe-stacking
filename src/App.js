@@ -55,7 +55,29 @@ export default function App() {
     getStablecoins
   } = useGraphClient();
 
+  useEffect(() => {
+    actions.setNetId(netId)
+  }, [netId])
+  useEffect(() => {
+    actions.setSrg(srg)
+  }, [srg])
+  useEffect(() => {
+    actions.setGoldList(goldList)
+  }, [goldList])
+  useEffect(() => {
+    actions.setLoadWeb3Modal(loadWeb3Modal)
+  }, [loadWeb3Modal])
 
+  useEffect(() => {
+    actions.setStablecoins(stablecoins)
+  }, [stablecoins])
+
+  useEffect(() => {
+    actions.setProvider(provider)
+  }, [provider])
+  useEffect(() => {
+    actions.setCoinbase(coinbase)
+  }, [coinbase]);
 
   useEffect(() => {
     initiateClient(netId);
@@ -149,18 +171,8 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ state, actions }}>
-      <MainMenu
-        coinbase={coinbase}
-        loadWeb3Modal={loadWeb3Modal}
-        showSwap={showSwap}
-        setShowSwap={setShowSwap}
-        showStake={showStake}
-        setShowStake={setShowStake}
-      />
-      <Box pad={{ top: "xlarge", bottom: "large" }} height="large" style={{
-        background: `transparent url(${require('./assets/background.png')}) 0% 0% no-repeat padding-box`,
-        backgroundSize: 'cover'
-      }}>
+      <MainMenu />
+      <Box pad={{ top: "xlarge", bottom: "large" }} flex={false} height="large">
         <Banner
           netId={netId}
           srg={srg}
@@ -207,14 +219,7 @@ export default function App() {
           />
         }
       </Box>
-      {/* {
-        coinbase &&
-        showStake &&
-        <Staking
-          stakeTokens={stakeTokens}
-          setShowStake={setShowStake}
-        />
-      } */}
+
       <DappFooter />
     </AppContext.Provider>
   )

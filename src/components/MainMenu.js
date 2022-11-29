@@ -4,10 +4,13 @@ import {
   Button,
   Image,
   Menu,
+  Text,
 } from 'grommet';
 
+import { useAppContext } from '../hooks/useAppState';
 
 export default function MainMenu(props) {
+  const { state } = useAppContext();
 
   return (
     <Header background="none" pad="small" style={{
@@ -17,11 +20,9 @@ export default function MainMenu(props) {
         src={require("../assets/logo.png")}
       /> */}
       {
-        !props.coinbase ?
-          <Button label="Connect" onClick={props.loadWeb3Modal} /> :
-          <Button label="Stake" onClick={() => {
-            props.setShowStake(!props.showStake)
-          }} />
+        !state.coinbase ?
+        <Button label="Connect" primary onClick={state.loadWeb3Modal} /> :
+        <Text size="medium">Connected as {state.coinbase}</Text>
       }
     </Header>
   )

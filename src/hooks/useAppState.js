@@ -15,10 +15,16 @@ const useAppState = () => {
   const initialState = {
     provider: null,
     netId: null,
-    profile: null,
-    self: null,
-    user: null,
     coinbase: null,
+    goldList: null,
+    srg: null,
+    client: null,
+    loadWeb3Modal: null,
+    stablecoins: null,
+    whitelisted: null,
+    goldListBalance: null,
+    coinbaseBalance: null,
+    setGetStablecoinsBalance: null,
   }
 
   // Manage the state using React.useState()
@@ -44,18 +50,33 @@ const getActions = (setState) => ({
   setCoinbase: (coinbase) => {
     setState((state) => ({ ...state, coinbase: coinbase }))
   },
-  setSelf: (self) => {
-    setState((state) => ({ ...state, self: self }))
-  },
-  setProfile: (profile) => {
-    setState((state) => ({ ...state, profile: profile }))
-  },
-  setUser: (user) => {
-    setState((state) => ({ ...state, user: user }))
-  },
   setClient: (client) => {
     setState((state) => ({ ...state, client: client }))
-  }
+  },
+  setGoldList: (goldList) => {
+    setState((state) => ({ ...state, goldList: goldList }))
+  },
+  setSrg: (srg) => {
+    setState((state) => ({ ...state, srg: srg }))
+  },
+  setLoadWeb3Modal: (loadWeb3Modal) => {
+    setState((state) => ({ ...state, loadWeb3Modal: loadWeb3Modal }))
+  },
+  setStablecoins: (stablecoins) => {
+    setState((state) => ({ ...state, stablecoins: stablecoins }))
+  },
+  setWhitelisted: (whitelisted) => {
+    setState((state) => ({ ...state, whitelisted: whitelisted }))
+  },
+  setGoldListBalance: (goldListBalance) => {
+    setState((state) => ({ ...state, goldListBalance: goldListBalance }))
+  },
+  setCoinbaseBalance: (coinbaseBalance) => {
+    setState((state) => ({ ...state, coinbaseBalance: coinbaseBalance }))
+  },
+  setGetStablecoinsBalance: (getStablecoinsBalance) => {
+    setState((state) => ({ ...state, getStablecoinsBalance: getStablecoinsBalance }))
+  },
 })
 
 

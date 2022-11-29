@@ -9,15 +9,18 @@ import {
   Button
 } from 'grommet';
 import { ethers } from "ethers";
+import { useAppContext } from '../hooks/useAppState';
 
 
 export default function GoldListModal(props) {
 
+  const { state } = useAppContext();
 
   const [total, setTotal] = useState();
 
   const [srgExpect,setSrgExpect] = useState();
   const [msg,setMsg] = useState();
+  const [tx,setTx] = useState();
 
   useEffect(() => {
     if(total > 0 && props.value==="Native"){
@@ -40,15 +43,15 @@ export default function GoldListModal(props) {
 
       <Box align="center" pad="medium">
       {
-        props.provider && props.coinbase &&
+        state.provider && state.coinbase &&
         <>
         <Text>
           Amount of {' '}
           {
             props.value === "Native" ?
-              props.netId === 5 ?
+              state.netId === 5 ?
               "Goerli ETH" :
-              props.netId === 97 ?
+              state.netId === 97 ?
               "BNB" :
               "Matic" :
             "USD"
@@ -76,11 +79,14 @@ export default function GoldListModal(props) {
         }
         {
           total > 0 &&
-          <Button primary onClick={async () => {
+          <Button primary disabled={tx} onClick={async () => {
             try{
+              setTx(true)
               await props.buyTokens(total);
+              setTx(false)
             } catch(err){
               console.log(err)
+              setTx(false)
               setMsg(err.reason)
             }
             setTimeout(() => {
